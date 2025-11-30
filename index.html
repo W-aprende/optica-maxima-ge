@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optica Maxima G.E. - Sistema de Gestión Óptica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .font-serif { font-family: 'Crimson Text', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+        .bg-cream { background-color: #faf8f5; }
+        .text-navy { color: #1e3a8a; }
+        .bg-navy { background-color: #1e3a8a; }
+        .border-navy { border-color: #1e3a8a; }
+        .hover-lift { transition: transform 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-4px); }
+        .card-shadow { box-shadow: 0 10px 25px rgba(30, 58, 138, 0.1); }
+        .gradient-text { background: linear-gradient(135deg, #1e3a8a, #3b82f6); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="bg-cream font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="text-2xl font-serif font-bold text-navy">Optica Maxima G.E.</div>
+                    <div class="hidden md:block text-sm text-gray-600">Sistema de Gestión Óptica</div>
+                </div>
+                <div class="flex space-x-6">
+                    <button onclick="showSection('Inicio')" class="nav-btn text-gray-700 hover:text-navy px-3 py-2 rounded-md text-sm font-medium transition-colors">Inicio</button>
+                    <button onclick="showSection('patients')" class="nav-btn text-gray-700 hover:text-navy px-3 py-2 rounded-md text-sm font-medium transition-colors">Pacientes</button>
+                    <button onclick="showSection('orders')" class="nav-btn text-gray-700 hover:text-navy px-3 py-2 rounded-md text-sm font-medium transition-colors">Pedidos</button>
+                    <button onclick="showSection('invoices')" class="nav-btn text-gray-700 hover:text-navy px-3 py-2 rounded-md text-sm font-medium transition-colors">Facturas</button>
+                    <button onclick="showSection('appointments')" class="nav-btn text-gray-700 hover:text-navy px-3 py-2 rounded-md text-sm font-medium transition-colors">Citas</button>
+                    <button onclick="showSection('notifications')" class="nav-btn text-gray-700 hover:text-navy px-3 py-2 rounded-md text-sm font-medium transition-colors">WhatsApp</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Inicio Section -->
+        <div id="Inicio" class="section">
+            <div class="mb-8">
+                <h1 class="text-4xl font-serif font-bold text-navy mb-2">
+                    <span id="typed-text"></span>
+                </h1>
+                <p class="text-gray-600 text-lg">Panel de control principal del sistema</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Total Pacientes</p>
+                            <p class="text-3xl font-bold text-navy" id="totalPatients">0</p>
+                        </div>
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <svg class="w-6 h-6 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Pedidos Activos</p>
+                            <p class="text-3xl font-bold text-navy" id="activeOrders">0</p>
+                        </div>
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Citas Hoy</p>
+                            <p class="text-3xl font-bold text-navy" id="todayAppointments">0</p>
+                        </div>
+                        <div class="bg-yellow-100 p-3 rounded-full">
+                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 card-shadow hover-lift">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Ingresos Mes</p>
+                            <p class="text-3xl font-bold text-navy" id="monthlyRevenue">$0</p>
+                        </div>
+                        <div class="bg-purple-100 p-3 rounded-full">
+                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl p-6 card-shadow">
+                    <h3 class="text-lg font-semibold text-navy mb-4">Últimos Pedidos</h3>
+                    <div id="recentOrders" class="space-y-3">
+                        <!-- Orders will be populated here -->
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 card-shadow">
+                    <h3 class="text-lg font-semibold text-navy mb-4">Próximas Citas</h3>
+                    <div id="upcomingAppointments" class="space-y-3">
+                        <!-- Appointments will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patients Section -->
+        <div id="patients" class="section hidden">
+            <div class="mb-6">
+                <h2 class="text-3xl font-serif font-bold text-navy mb-2">Gestión de Pacientes</h2>
+                <p class="text-gray-600">Administra la información de tus pacientes</p>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-navy">Registrar Nuevo Paciente</h3>
+                    <button onclick="togglePatientForm()" class="bg-navy text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors">
+                        + Nuevo Paciente
+                    </button>
+                </div>
+
+                <form id="patientForm" class="hidden space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+                            <input type="text" id="patientName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                            <input type="tel" id="patientPhone" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="patientEmail" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de Nacimiento</label>
+                            <input type="date" id="patientBirthDate" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+                        <textarea id="patientAddress" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent"></textarea>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button type="submit" class="bg-navy text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition-colors">Guardar</button>
+                        <button type="button" onclick="togglePatientForm()" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 card-shadow">
+                <h3 class="text-lg font-semibold text-navy mb-4">Lista de Pacientes</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Nombre</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Teléfono</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Email</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patientsTable">
+                            <!-- Patients will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Section -->
+        <div id="orders" class="section hidden">
+            <div class="mb-6">
+                <h2 class="text-3xl font-serif font-bold text-navy mb-2">Gestión de Pedidos</h2>
+                <p class="text-gray-600">Administra los pedidos de lentes de tus pacientes</p>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                <h3 class="text-lg font-semibold text-navy mb-4">Nuevo Pedido de Lentes</h3>
+                <form id="orderForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Paciente</label>
+                            <select id="orderPatient" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                                <option value="">Seleccionar paciente...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Lente</label>
+                            <select id="lensType" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                                <option value="">Seleccionar tipo...</option>
+                                <option value="Monofocal">Monofocal</option>
+                                <option value="Bifocal">Bifocal</option>
+                                <option value="Progresivo">Progresivo</option>
+                                <option value="Contacto">Contacto</option>
+                                <option value="Sol">Sol</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Material</label>
+                            <select id="lensMaterial" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent">
+                                <option value="">Seleccionar material...</option>
+                                <option value="CR-39">CR-39</option>
+                                <option value="Policarbonato">Policarbonato</option>
+                                <option value="Trivex">Trivex</option>
+                                <option value="Alto Índice">Alto Índice</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Precio</label>
+                            <input type="number" id="orderPrice" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Descripción/Notas</label>
+                        <textarea id="orderNotes" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent"></textarea>
+                    </div>
+                    <button type="submit" class="bg-navy text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition-colors">Registrar Pedido</button>
+                </form>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 card-shadow">
+                <h3 class="text-lg font-semibold text-navy mb-4">Pedidos Registrados</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Paciente</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Tipo de Lente</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Material</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Precio</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Estado</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTable">
+                            <!-- Orders will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Invoices Section -->
+        <div id="invoices" class="section hidden">
+            <div class="mb-6">
+                <h2 class="text-3xl font-serif font-bold text-navy mb-2">Sistema de Facturación</h2>
+                <p class="text-gray-600">Genera y gestiona facturas para tus pacientes</p>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                <h3 class="text-lg font-semibold text-navy mb-4">Nueva Factura</h3>
+                <form id="invoiceForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Paciente</label>
+                            <select id="invoicePatient" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                                <option value="">Seleccionar paciente...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Concepto</label>
+                            <input type="text" id="invoiceConcept" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" placeholder="Ej: Lentes progresivos + montura" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Monto</label>
+                            <input type="number" id="invoiceAmount" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Método de Pago</label>
+                            <select id="invoicePaymentMethod" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                                <option value="">Seleccionar método...</option>
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Tarjeta">Tarjeta</option>
+                                <option value="Transferencia">Transferencia</option>
+                                <option value="Cheque">Cheque</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="bg-navy text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition-colors">Generar Factura</button>
+                </form>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 card-shadow mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-navy">Reporte de Facturación</h3>
+                    <div class="flex space-x-2">
+                        <button onclick="generateReport('daily')" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Hoy</button>
+                        <button onclick="generateReport('weekly')" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Semana</button>
+                        <button onclick="generateReport('monthly')" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Mes</button>
+                    </div>
+                </div>
+                <div id="reportSummary" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <!-- Report summary will be populated here -->
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 card-shadow">
+                <h3 class="text-lg font-semibold text-navy mb-4">Facturas Emitidas</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">N° Factura</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Paciente</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Concepto</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Monto</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Fecha</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Método</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoicesTable">
+                            <!-- Invoices will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments Section -->
+        <div id="appointments" class="section hidden">
+            <div class="mb-6">
+                <h2 class="text-3xl font-serif font-bold text-navy mb-2">Gestión de Citas</h2>
+                <p class="text-gray-600">Programa y administra las citas de tus pacientes</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl p-6 card-shadow">
+                    <h3 class="text-lg font-semibold text-navy mb-4">Nueva Cita</h3>
+                    <form id="appointmentForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Paciente</label>
+                            <select id="appointmentPatient" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                                <option value="">Seleccionar paciente...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
+                            <input type="date" id="appointmentDate" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Hora</label>
+                            <input type="time" id="appointmentTime" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Cita</label>
+                            <select id="appointmentType" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                                <option value="">Seleccionar tipo...</option>
+                                <option value="Consulta">Consulta general</option>
+                                <option value="Examen">Examen de vista</option>
+                                <option value="Ajuste">Ajuste de lentes</option>
+                                <option value="Entrega">Entrega de lentes</option>
+                                <option value="Seguimiento">Seguimiento</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
+                            <textarea id="appointmentNotes" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent"></textarea>
+                        </div>
+                        <button type="submit" class="bg-navy text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition-colors">Agendar Cita</button>
+                    </form>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 card-shadow">
+                    <h3 class="text-lg font-semibold text-navy mb-4">Calendario de Citas</h3>
+                    <div id="appointmentCalendar">
+                        <!-- Calendar will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 card-shadow mt-6">
+                <h3 class="text-lg font-semibold text-navy mb-4">Próximas Citas</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Paciente</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Fecha</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Hora</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Tipo</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Estado</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointmentsTable">
+                            <!-- Appointments will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- WhatsApp Section -->
+        <div id="notifications" class="section hidden">
+            <div class="mb-6">
+                <h2 class="text-3xl font-serif font-bold text-navy mb-2">Notificaciones WhatsApp</h2>
+                <p class="text-gray-600">Envía mensajes de seguimiento y notificaciones a tus pacientes</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl p-6 card-shadow">
+                    <h3 class="text-lg font-semibold text-navy mb-4">Enviar Mensaje</h3>
+                    <form id="whatsappForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Paciente</label>
+                            <select id="whatsappPatient" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                                <option value="">Seleccionar paciente...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Mensaje</label>
+                            <select id="messageType" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" required>
+                                <option value="">Seleccionar tipo...</option>
+                                <option value="followup">Seguimiento de pedido</option>
+                                <option value="ready">Pedido listo</option>
+                                <option value="appointment">Recordatorio de cita</option>
+                                <option value="custom">Mensaje personalizado</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
+                            <textarea id="whatsappMessage" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-navy focus:border-transparent" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                        </div>
+                        <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">Enviar por WhatsApp</button>
+                    </form>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 card-shadow">
+                    <h3 class="text-lg font-semibold text-navy mb-4">Plantillas de Mensajes</h3>
+                    <div class="space-y-3">
+                        <div class="border border-gray-200 rounded-lg p-3 cursor-pointer hover:bg-gray-50" onclick="useTemplate('followup')">
+                            <h4 class="font-medium text-gray-800">Seguimiento de Pedido</h4>
+                            <p class="text-sm text-gray-600">Hola [Nombre], queremos informarte que tu pedido de lentes está en proceso. Te avisaremos cuando esté listo. Gracias por tu paciencia.</p>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-3 cursor-pointer hover:bg-gray-50" onclick="useTemplate('ready')">
+                            <h4 class="font-medium text-gray-800">Pedido Listo</h4>
+                            <p class="text-sm text-gray-600">¡Hola [Nombre]! Tu pedido de lentes ya está listo para recoger. Puedes pasar en cualquier momento durante nuestro horario de atención.</p>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-3 cursor-pointer hover:bg-gray-50" onclick="useTemplate('appointment')">
+                            <h4 class="font-medium text-gray-800">Recordatorio de Cita</h4>
+                            <p class="text-sm text-gray-600">Hola [Nombre], te recordamos que tienes una cita programada para el [fecha] a las [hora]. Esperamos verte pronto.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 card-shadow mt-6">
+                <h3 class="text-lg font-semibold text-navy mb-4">Historial de Mensajes</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Paciente</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Tipo</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Mensaje</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Fecha</th>
+                                <th class="text-left py-3 px-4 font-medium text-gray-700">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="messageHistory">
+                            <!-- Message history will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="text-center text-gray-600">
+                <p>&copy; 2024 Optica Maxima G.E. - Sistema de Gestión Óptica. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
